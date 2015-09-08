@@ -13,8 +13,8 @@
 
 	// Call this to register for push notifications and retreive a deviceToken
 	PushNotification.prototype.registerDevice = function(config, callback) {
-    console.log("REGISTERING IN JS");
-		cordova.exec(callback, callback, "PushNotification", "registerDevice", config ? [config] : []);
+        //console.log(">>Plugin JS - registerDevice");
+        cordova.exec(callback, callback, "PushNotification", "registerDevice", config ? [config] : []);
 	};
 
 	// Call this to retreive pending notification received while the application is in background or at launch
@@ -24,7 +24,7 @@
 
 	// Call this to get a detailed status of remoteNotifications
 	PushNotification.prototype.getRemoteNotificationStatus = function(callback) {
-    console.log("Callback is " +callback);
+        //console.log("Calling to get remote notification status");
 		cordova.exec(callback, callback, "PushNotification", "getRemoteNotificationStatus", []);
 	};
 
