@@ -4,29 +4,21 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name = "format-detection" content = "telephone=no"/>
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width;" />
-        <title>Push Notification Tester</title>
-        <link href="css/index.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello Cordova</title>
     </head>
     <body>
         <div class="app">
-            <h2>Push Notifications Tester</h2>
-            <div id="btns">
-                <ul id="btnList">
-                    <li><button onclick="app.register()">Register for Notifications</button></li>
-                    <li><button onclick="app.receiveStatus()">Remote Notification Status</button></li>
-                    <li><button onclick="app.getPending()">Get Pending Notifications</button></li>
-                    <li>
-                        <textarea id="log" readonly></textarea>
-                    </li>
-                </ul>
+            <h1>Apache Cordova</h1>
+            <div id="deviceready">
+                <p class="status pending blink">Connecting to Device</p>
+                <p class="status complete blink hide">Device is Ready</p>
             </div>
         </div>
-    <script src="cordova-2.1.0.js"></script>
-    <script src="js/plugins/PushNotification.js"></script>
-    <script src="js/index.js"></script>
-    <script type="text/javascript">
-        console.log("Test " + app);
-        app.initialize();
-    </script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
     </body>
 </html>
