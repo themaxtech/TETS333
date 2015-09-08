@@ -17,7 +17,7 @@
  * under the License.
  */
 var app = {
-    myLog: document.getElementById("log"),
+    myLog: $("#testLoad"),
     initialize: function() {
         this.bindEvents();
     },
