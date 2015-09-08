@@ -70,6 +70,7 @@ var app = {
         });
     },
     storeToken: function(token) {
+        alert("Token is " + token);
         console.log("Token is " + token);
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.open("POST","http://127.0.0.1:8888",true);
