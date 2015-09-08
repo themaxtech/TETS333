@@ -84,3 +84,18 @@ var app = {
         }
     }    
 };
+
+$(document).on('click','#one',function(){
+    alert("one");
+    app.register(); 
+});
+
+$(document).on('click','#two',function(){
+    alert("two");
+   app.receiveStatus();    
+});
+
+$(document).on('click','#tre',function(){
+    alert("tre");
+   app.getPending();    
+});
