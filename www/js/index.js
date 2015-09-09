@@ -4,7 +4,7 @@ var pushNotification;
 try
 {
     pushNotification = window.plugins.pushNotification;
-    if ( window.device.platform == 'android' || window.device.platform == 'Android' || window.device.platform == "amazon-fireos" ){
+    if ( window.device.platform == 'android' || window.device.platform == 'Android'){
     pushNotification.register(
     pushSuccessHandler,
     pushErrorHandler,
@@ -12,7 +12,7 @@ try
         "senderID":"replace_with_sender_id",
         "ecb":"onNotification"
     });
-	} else if ( window.device.platform == 'blackberry10'){
+	} else if ( window.device.platform == 'BlackBerry'){
 	    pushNotification.register(
 	    pushSuccessHandler,
 	    pushErrorHandler,
