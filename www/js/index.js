@@ -1,34 +1,48 @@
-//var pushNotification;
+var pushNotification;
  
  // Setup push notifications:
 try
 {
-    var pushNotification = window.plugins.pushNotification;
-    if (window.device.platform == 'iOS') {
-        // Register for IOS:
-        alert("iOS Device");
-        pushNotification.register(
-            pushSuccessHandler,
-            pushErrorHandler, {
-                "badge":"true",
-                "sound":"true",
-                "alert":"true",
-                "ecb":"onNotificationAPNS"
-            }
-        );
-  
-    }
-    else {
+    pushNotification = window.plugins.pushNotification;
+    if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+    pushNotification.register(
+    pushSuccessHandler,
+    pushErrorHandler,
+    {
+        "senderID":"replace_with_sender_id",
+        "ecb":"onNotification"
+    });
+	} else if ( device.platform == 'blackberry10'){
+	    pushNotification.register(
+	    pushSuccessHandler,
+	    pushErrorHandler,
+	    {
+	        invokeTargetId : "replace_with_invoke_target_id",
+	        appId: "replace_with_app_id",
+	        ppgUrl:"replace_with_ppg_url", //remove for BES pushes
+	        ecb: "pushNotificationHandler",
+	        simChangeCallback: replace_with_simChange_callback,
+	        pushTransportReadyCallback: replace_with_pushTransportReady_callback,
+	        launchApplicationOnPush: true
+	    });
+	} else {
+	    pushNotification.register(
+	    tokenHandler,
+	    pushErrorHandler,
+	    {
+	        "badge":"true",
+	        "sound":"true",
+	        "alert":"true",
+	        "ecb":"onNotificationAPNS"
+	    });
+	}
 
-    	alert("Device is not an iOS");
-
-    }
 }
 catch(err)
 {
     // For this example, we'll fail silently ...
     console.log(err);
-    alert("deviceready error" + err);
+    alert("deviceready error -->" + err);
 
 }
 
