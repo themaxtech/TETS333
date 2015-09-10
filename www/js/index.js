@@ -6,83 +6,13 @@ var userHandler = {
     useroriname : '',
     status      : ''
 }
-
- var app = {
-    myLog: document.getElementById("log"),
-    initialize: function() {
-        this.bindEvents();
-    },
-    // Bind Event Listeners
-     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-        document.addEventListener('resume', this.onResume, false);
-    },
-    onResume: function() {
-        app.myLog.value="";
-        // Clear the badge number - if a new notification is received it will have a number set on it for the badge
-        app.setBadge(0);
-        app.getPending(); // Get pending since we were reopened and may have been launched from a push notification
-    },
-    onDeviceReady: function() {
-        alert("Device Ready");
-        app.register(); // Call to register device immediately every time since unique token can change (per Apple)
-        
-        // This will cause to fire when app is active already
-        document.addEventListener('push-notification', function(event) {
-            console.log('RECEIVED NOTIFICATION! Push-notification! ' + event);
-            app.myLog.value+=JSON.stringify(['\nPush notification received!', event]);
-            // Could pop an alert here if app is open and you still wanted to see your alert
-            //navigator.notification.alert("Received notification - fired Push Event " + JSON.stringify(['push-//notification!', event]));
-        });
-        document.removeEventListener('deviceready', this.deviceready, false);
-    },
-    setBadge: function(num) {
-        var pushNotification = window.plugins.pushNotification;
-        app.myLog.value+="Clear badge... \n";
-        pushNotification.setApplicationIconBadgeNumber(num);
-    },
-    receiveStatus: function() {
-        var pushNotification = window.plugins.pushNotification;
-        pushNotification.getRemoteNotificationStatus(function(status) {
-            app.myLog.value+=JSON.stringify(['Registration check - getRemoteNotificationStatus', status])+"\n";
-        });
-    },
-    getPending: function() {
-        var pushNotification = window.plugins.pushNotification;
-        pushNotification.getPendingNotifications(function(notifications) {
-            app.myLog.value+=JSON.stringify(['getPendingNotifications', notifications])+"\n";
-            console.log(JSON.stringify(['getPendingNotifications', notifications]));
-        });
-    },
-    register: function() {
-        var pushNotification = window.plugins.pushNotification;
-        pushNotification.registerDevice({alert:true, badge:true, sound:true}, function(status) {
-            app.myLog.value+=JSON.stringify(['registerDevice status: ', status])+"\n";
-            app.storeToken(status.deviceToken);
-        });
-    },
-    storeToken: function(token) {
-        alert("Token is " + token);
-        console.log("Token is " + token);
-        var xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("POST","http://127.0.0.1:8888",true);
-        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xmlhttp.send("token="+token+"&message=pushnotificationtester");
-        xmlhttp.onreadystatechange=function() {
-            if (xmlhttp.readyState==4) {
-                //a response now exists in the responseTest property.
-                console.log("Registration response: " + xmlhttp.responseText);
-                app.myLog.value+="Registration server returned: " + xmlhttp.responseText;
-            }
-        }
-    }    
-};
+ 
+ 
 
 $(document).on('pagecontainershow', function (e, ui) {
     var activePage = $(':mobile-pagecontainer').pagecontainer('getActivePage');
-    if(activePage.attr('id') === 'login') {
-        app.initialize();
-
+    if(activePage.attr('id') === 'login') {  
+        
         $(document).on('click', '#submit', function() { // catch the form's submit event
             if($('#username').val().length > 0 && $('#password').val().length > 0){
              
@@ -91,8 +21,8 @@ $(document).on('pagecontainershow', function (e, ui) {
                 // Send data to server through the Ajax call
                 // action is functionality we want to call and outputJSON is our data
                 
-                    //$.ajax({url: 'http://themaxtech.com/app/auth.php',
-                    $.ajax({url: 'auth.php',
+                    $.ajax({url: 'http://themaxtech.com/app/auth.php',
+                    //$.ajax({url: 'auth.php',
                     data: {action : 'authorization', formData : $('#check-user').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -116,7 +46,11 @@ $(document).on('pagecontainershow', function (e, ui) {
                             userHandler.useroriname = result.status4; 
                             
                             //$.mobile.changePage("#second");
-
+                            $(document).on("pagebeforeshow","#arunhome",function(event){
+                                //alert("pagebeforeshow event fired - pagetwo is about to be shown");
+                                //document.getElementById("username").value= userHandler.username;
+                                //document.getElementById("username").value= userHandler.username;
+                            });
                             $.mobile.changePage("#arunhome");
 
                            
@@ -153,8 +87,8 @@ $(document).on('pagecontainershow', function (e, ui) {
                 // Send data to server through the Ajax call
                 // action is functionality we want to call and outputJSON is our data
                 
-                    //$.ajax({url: 'http://themaxtech.com/app/yearcal.php',
-                    $.ajax({url: 'yearcal.php',
+                    $.ajax({url: 'http://themaxtech.com/app/yearcal.php',
+                    //$.ajax({url: 'yearcal.php',
                     data: {action : 'authorization', formData : $('#check-cal').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -243,8 +177,8 @@ $(document).on('pagecontainershow', function (e, ui) {
         $(document).on('click', '#homesubmit', function() { // catch the form's submit event
 
             if($('#usernameb').val().length > 0 && $('#passwordb').val().length > 0){
-                    //$.ajax({url: 'http://themaxtech.com/app/mes.php',
-                    $.ajax({url: 'mes.php',
+                    $.ajax({url: 'http://themaxtech.com/app/mes.php',
+                    //$.ajax({url: 'mes.php',
                     data: {action : 'authorization', formData : $('#check-mess').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -334,8 +268,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernamec').val().length > 0 && $('#passwordc').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/pro.php',
-                    $.ajax({url: 'pro.php',
+                    $.ajax({url: 'http://themaxtech.com/app/pro.php',
+                    //$.ajax({url: 'pro.php',
                     data: {action : 'authorization', formData : $('#check-pro').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -438,8 +372,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernamee').val().length > 0 && $('#passworde').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/homework.php',
-                    $.ajax({url: 'homework.php',
+                    $.ajax({url: 'http://themaxtech.com/app/homework.php',
+                    //$.ajax({url: 'homework.php',
                     data: {action : 'authorization', formData : $('#check-homework').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -545,8 +479,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernamef').val().length > 0 && $('#passwordf').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/food.php',
-                    $.ajax({url: 'food.php',
+                    $.ajax({url: 'http://themaxtech.com/app/food.php',
+                    //$.ajax({url: 'food.php',
                     data: {action : 'authorization', formData : $('#check-food').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -634,8 +568,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernameo').val().length > 0 && $('#passwordo').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/leave.php',
-                    $.ajax({url: 'leave.php',
+                    $.ajax({url: 'http://themaxtech.com/app/leave.php',
+                    //$.ajax({url: 'leave.php',
                     data: {action : 'authorization', formData : $('#check-leavelist').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -720,8 +654,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernameh').val().length > 0 && $('#passwordh').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/report.php',
-                    $.ajax({url: 'report.php',
+                    $.ajax({url: 'http://themaxtech.com/app/report.php',
+                    //$.ajax({url: 'report.php',
                     data: {action : 'authorization', formData : $('#check-report').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -891,8 +825,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernamei').val().length > 0 && $('#passwordi').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/exam.php',
-                    $.ajax({url: 'exam.php',
+                    $.ajax({url: 'http://themaxtech.com/app/exam.php',
+                    //$.ajax({url: 'exam.php',
                     data: {action : 'authorization', formData : $('#check-exam').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -1003,8 +937,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernamej').val().length > 0 && $('#passwordj').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/time.php',
-                    $.ajax({url: 'time.php',
+                    $.ajax({url: 'http://themaxtech.com/app/time.php',
+                    //$.ajax({url: 'time.php',
                     data: {action : 'authorization', formData : $('#check-time').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -1097,8 +1031,8 @@ $(document).on('pagecontainershow', function (e, ui) {
 
             if($('#usernamek').val().length > 0 && $('#passwordk').val().length > 0){
 
-                    //$.ajax({url: 'http://themaxtech.com/app/gallery.php',
-                    $.ajax({url: 'gallery.php',
+                    $.ajax({url: 'http://themaxtech.com/app/gallery.php',
+                    //$.ajax({url: 'gallery.php',
                     data: {action : 'authorization', formData : $('#check-image').serialize()},
                     type: 'post',                  
                     async: 'true',
@@ -1187,8 +1121,8 @@ $(document).on('pagecontainershow', function (e, ui) {
         $(document).on('click', '#leavesubmit', function() { // catch the form's submit event
             if($('#regnot').val().length > 0 && $('#usernamet').val().length > 0 && $('#clat').val().length > 0 && $('#sect').val().length > 0 && $('#datt').val().length > 0 && $('#messt').val().length > 0){
                    
-                    //$.ajax({url: 'http://themaxtech.com/app/leaveform.php',
-                    $.ajax({url: 'leaveform.php',
+                    $.ajax({url: 'http://themaxtech.com/app/leaveform.php',
+                    //$.ajax({url: 'leaveform.php',
                     data: {action : 'authorization', formData : $('#check-leave').serialize()},
                     type: 'post',                  
                     async: 'true',
